@@ -14,8 +14,11 @@ public class Aluno {
     private BigDecimal nota1;
     private BigDecimal nota2;
     private BigDecimal nota3;
+    public void setId(Long id){
+        this.id=id;
 
 
+    }
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -61,7 +64,7 @@ public class Aluno {
         return nota3;
     }
 
-    public Aluno( String nome, String email, BigDecimal nota1, BigDecimal nota2, BigDecimal nota3) {
+    public Aluno ( String nome, String email, BigDecimal nota1, BigDecimal nota2, BigDecimal nota3){
 
         this.nome = nome;
         this.email = email;
@@ -71,4 +74,15 @@ public class Aluno {
     }
     public Aluno(){};
 
+    @Override
+    public String toString() {
+        return "\nAluno{" +
+                "\n id=" + id +
+                "\n nome='" + nome + '\'' +
+                "\n email='" + email + '\'' +
+                "\n nota1=" + nota1 +
+                "\n nota2=" + nota2 +
+                "\n nota3=" + nota3 +
+                '}';
+    }
 }

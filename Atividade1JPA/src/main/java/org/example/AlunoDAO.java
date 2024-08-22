@@ -15,15 +15,15 @@ public class AlunoDAO {
         em.persist(aluno);
 
     }
-    public Aluno findOne(Long id){
-        return em.find(Aluno.class,id);
+    public Aluno findOne(String nome){
+        return (Aluno) em.createQuery("select a from Aluno a  where a.nome=:n").setParameter("n",nome).getSingleResult();
 
     }
-    public void delete(Long id){
-        Aluno aluno = findOne(id);
-        if(aluno!=null) {
-            em.remove(aluno);
-        }
+    public void delete(String nome){
+        String jpql="Delete from Aluno a where a.nome=:n";
+        em.createQuery(jpql).setParameter("n", nome).executeUpdate();
+
+
 
 
     }
@@ -32,10 +32,28 @@ public class AlunoDAO {
         String jpql = "SELECT a FROM Aluno a";
         return em.createQuery(jpql, Aluno.class).getResultList();
     }
-    public void update(Aluno a){
-        String jpql="UPDATE Aluno a set a.nome=:nome, a.nota1=:nt1, nota2=:nt2, nota3=:nt3 where a.nome= :n";
-        em.createQuery(jpql,Aluno.class).setParameter("nome",a.getNome()).setParameter("nt1",a.getNota1()).setParameter("nt2",a.getNota2())
-                .setParameter("nt3",a.getNota3()).setParameter("n",a.getNome());
+    public void update(Aluno aluno) {
+        // Primeiro, encontre o aluno existente pelo nome (ou ID, se disponível)
+        Aluno existingAluno = findOne(aluno.getNome());
+
+        if (existingAluno != null) {
+            // Atualize os campos necessários
+            existingAluno.setNota1(aluno.getNota1());
+            existingAluno.setNota2(aluno.getNota2());
+            existingAluno.setNota3(aluno.getNota3());
+            existingAluno.setEmail(aluno.getEmail());
+
+            // Não é necessário uma consulta de update manual, apenas faça merge
+            em.merge(existingAluno);
+        } else {
+            System.out.println("Aluno não encontrado.");
+        }
+    }
+
+    public void deleteAll(){
+        String jpql="delete from Aluno a";
+        em.createQuery(jpql).executeUpdate();
+
 
     }
     
