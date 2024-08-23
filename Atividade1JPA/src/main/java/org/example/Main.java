@@ -35,24 +35,7 @@ public class Main {
             i=Integer.parseInt(scan.nextLine());
             switch (i){
                 case 1:
-                    System.out.println("digite o nome");
-                    nome=scan.nextLine();
-                    System.out.println("digite o email");
-                    email=scan.nextLine();
-                    System.out.println("Digite a primeira nota");
-                    n1=BigDecimal.valueOf(Float.parseFloat(scan.nextLine()));
-                    System.out.println("Digite a segunda nota");
-                    n2=BigDecimal.valueOf(Float.parseFloat(scan.nextLine()));
-                    System.out.println("Digite a terceira nota");
-                    n3=BigDecimal.valueOf(Float.parseFloat(scan.nextLine()));
-
-                    aluno=new Aluno();
-
-                    aluno.setNome(nome);
-                    aluno.setEmail(email);
-                    aluno.setNota1(n1);
-                    aluno.setNota2(n2);
-                    aluno.setNota3(n3);
+                    aluno = setData(scan);
 
                     em.getTransaction().begin();
                     dao.insert(aluno);
@@ -142,5 +125,33 @@ public class Main {
 
 
 
+    }
+
+    private static Aluno setData(Scanner scan) {
+        String email;
+        String nome;
+        BigDecimal n3;
+        BigDecimal n1;
+        BigDecimal n2;
+        Aluno aluno;
+        System.out.println("digite o nome");
+        nome= scan.nextLine();
+        System.out.println("digite o email");
+        email= scan.nextLine();
+        System.out.println("Digite a primeira nota");
+        n1= new BigDecimal(scan.nextLine());
+        System.out.println("Digite a segunda nota");
+        n2=new BigDecimal(scan.nextLine());
+        System.out.println("Digite a terceira nota");
+        n3= new BigDecimal(scan.nextLine());
+
+        aluno=new Aluno();
+
+        aluno.setNome(nome);
+        aluno.setEmail(email);
+        aluno.setNota1(n1);
+        aluno.setNota2(n2);
+        aluno.setNota3(n3);
+        return aluno;
     }
 }
